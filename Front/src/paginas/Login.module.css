@@ -1,0 +1,35 @@
+.loginForm{
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    background-color: aliceblue;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0.0.0.0.1);
+    
+}
+
+
+.titulo{
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    font-size: 24px;
+    text-align: center;
+    color: rgba(222,115,14);
+    margin-bottom:25px ;
+}
+
+label{
+    font-size: 14px;
+    margin: 5px;
+}
+
+input{
+    padding: 10px;
+    font-size: 16px;
+    color: rgb(50,50,50);
+    width: 100%;
+    border:  1px solid rgba(222,115,14);
+    box-sizing: border-box;
+    margin: 5px;
+}

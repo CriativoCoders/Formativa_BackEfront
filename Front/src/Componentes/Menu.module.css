@@ -1,0 +1,44 @@
+.conteiner{
+    padding-top: 100px;
+    padding-bottom: 100px;
+    width: 96%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+table{
+    width: 700px;
+    height: 500px;
+    background-color: #e6e1e6e8;
+    padding: 10px;
+    border-radius: 30px;
+    border: 9px solid rgba(97, 85, 60, 0.1 );
+}
+
+td{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: larger;
+    text-align: center;
+    color: #080808e8;
+}
+
+td:hover{
+    color: blue;
+}
+
+
+.icon {
+    font-size: 6rem; /* Adjust the size as needed */
+}
+
+
+
+
+
+
+
+
+
