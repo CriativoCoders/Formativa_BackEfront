@@ -13,4 +13,3 @@ export function Rotas(){
             </Route>
         </Routes>
     )
-}
