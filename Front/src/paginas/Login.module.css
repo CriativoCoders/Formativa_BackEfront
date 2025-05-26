@@ -15,7 +15,7 @@
     display: flex;
     font-size: 24px;
     text-align: center;
-    color: rgba(222,115,14);
+    color: rgb(182, 0, 0);
     margin-bottom:25px ;
 }
 
@@ -29,7 +29,7 @@ input{
     font-size: 16px;
     color: rgb(50,50,50);
     width: 100%;
-    border:  1px solid rgba(222,115,14);
+    border:  1px solid rgb(175, 6, 43);
     box-sizing: border-box;
     margin: 5px;
 }
