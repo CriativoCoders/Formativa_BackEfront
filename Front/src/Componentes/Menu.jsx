@@ -4,9 +4,7 @@ import gestores from '../assets/Gestor.png';
 import professor from '../assets/Professor.png';
 import Disciplina from '../assets/Disciplinas.png';
 import Ambiente from '../assets/Ambiente.png';
-// colcar as imagens no asse
-
-
+// colcar as imagens no assets
 export function Menu() {
     return (
         <div className={estilo.Maincontainer}>

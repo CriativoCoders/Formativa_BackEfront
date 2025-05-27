@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
 import estilos from './Login.module.css';
 import { BarraNavegacao } from '../Componentes/BarraNavegacao';
+import { Rodape } from '../Componentes/Rodape';
 
 const schemaLogin = z.object({
   username: z.string()
@@ -39,7 +40,7 @@ export function Login(){
       localStorage.setItem('tipo', user.tipo);
       localStorage.setItem('user_id', user.id);
       localStorage.setItem('username', user.username);
-
+      
       console.log('Login realizado')
       navigate('/inicial');
     } catch (erro) {
@@ -47,27 +48,35 @@ export function Login(){
       alert("Credenciais inválidas")
     }
   }
-
+  
   return (
-    <div className={estilos.loginForm}>
-      <form onSubmit={handleSubmit(obterDados)}>
-        <h2 className={estilos.titulo}>Login</h2>
-        <label>Nome</label>
-        <input
-          {...register('username')}
-          placeholder='username'
-        />
-        {errors.username && <p>{errors.username.message}</p>}
+    <div className={estilos.BarraNavegacao}>
+      <BarraNavegacao/>
+        <div className={estilos.main}>
+          <div className={estilos.loginForm}>
+            <form onSubmit={handleSubmit(obterDados)}>
+              <h2 className={estilos.titulo}>Login</h2>
+              <label>Nome</label>
+              <input
+                {...register('username')}
+                placeholder='username'
+                />
+              {errors.username && <p>{errors.username.message}</p>}
 
-        <label>Senha</label>
-        <input 
-          {...register('password')}
-          placeholder='senha'
-          type='password'
-        />
-        {errors.password && <p>{errors.password.message}</p>}
-        <button type='submit'>Entrar</button>
-      </form>
+              <label>Senha</label>
+              <input 
+                {...register('password')}
+                placeholder='senha'
+                type='password'
+                />
+              {errors.password && <p>{errors.password.message}</p>}
+              <button type='submit'>Entrar</button>
+            </form>
+          </div>
+        </div>
+        <div className={estilos.Rodape}>
+          <Rodape/>
+        </div>
     </div>
   )
 }

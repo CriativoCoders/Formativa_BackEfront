@@ -1,15 +1,14 @@
 import { BarraNavegacao } from '../Componentes/BarraNavegacao';
 import { Cabecalho } from '../Componentes/Cabecalho';
-import { Menu } from '../Componentes/Menu';
+import { ListaProfessores } from '../Componentes/ListaProfessores';
 import { Rodape } from '../Componentes/Rodape';
-import './Inicial.css'; // Arquivo com o CSS de layout
 
-export function Inicial() {
+export function Professores() {
   return (
     <div className="pagina">
       <BarraNavegacao />
       <Cabecalho/>
-      <Menu/>
+      <ListaProfessores/>
       <Rodape/>
     </div>
   );

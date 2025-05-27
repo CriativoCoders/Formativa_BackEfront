@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { Login } from '../paginas/Login';
-import { Inicial } from '../Paginas/Inicial';
+import { Professores } from '../paginas/Professores';
+import { Inicial } from '../paginas/Inicial';
 
 
 export function Rotas(){
@@ -8,6 +9,7 @@ export function Rotas(){
         <Routes>
             <Route path='/' element={<Inicial/>}/>
             <Route path='/Login' element={<Login/>}/>
+             <Route path='/Professores' element={<Professores/>}/>
             
         </Routes>
     )
