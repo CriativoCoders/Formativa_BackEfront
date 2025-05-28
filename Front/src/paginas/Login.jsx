@@ -75,7 +75,7 @@ export function Login(){
           </div>
         </div>
         <div className={estilos.Rodape}>
-          <Rodape/>
+          {/* <Rodape/> */}
         </div>
     </div>
   )

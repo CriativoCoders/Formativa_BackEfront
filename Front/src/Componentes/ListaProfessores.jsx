@@ -2,18 +2,13 @@ import estilo from './ListaProfessores.module.css';
 import { useState } from 'react';
 
 export function ListaProfessores() {
-  const [professores, setProfessores] = useState([
-    { id: 1, nome: '', disciplina: '' },
-    { id: 2, nome: '', disciplina: '' },
-    { id: 3, nome: '', disciplina: '' },
-  ]);
+  const [professores, setProfessores] = useState([]);
+  const [idAtual, setIdAtual] = useState(1);
 
   const [novoProfessor, setNovoProfessor] = useState({
     nome: '',
     disciplina: '',
   });
-
-  const [idAtual, setIdAtual] = useState(4);
 
   const adicionarProfessor = (e) => {
     e.preventDefault();
@@ -35,6 +30,10 @@ export function ListaProfessores() {
       ...novoProfessor,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const deletarProfessor = (id) => {
+    setProfessores(professores.filter((professor) => professor.id !== id));
   };
 
   return (
@@ -63,6 +62,7 @@ export function ListaProfessores() {
             <th>ID</th>
             <th>Nome</th>
             <th>Disciplina</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -71,6 +71,11 @@ export function ListaProfessores() {
               <td>{professor.id}</td>
               <td>{professor.nome}</td>
               <td>{professor.disciplina}</td>
+              <td>
+                <button onClick={() => deletarProfessor(professor.id)}>
+                  Deletar
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -78,5 +83,3 @@ export function ListaProfessores() {
     </div>
   );
 }
-
-// Parei aqui 
