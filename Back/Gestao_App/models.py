@@ -2,12 +2,23 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class Professor(AbstractUser):
+    PROFESSOR = 'PROFESSOR'
+    GESTOR = 'GESTOR'
+    OUTRO = 'OUTRO'
+
+    TIPOS = [
+        (PROFESSOR, 'Professor'),
+        (GESTOR, 'Gestor'),
+        (OUTRO, 'Outro'),
+    ]
+
     indentificacao = models.CharField(max_length=20, unique=True)
     nome = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     telefone = models.CharField(max_length=15, blank=True, null=True)
     data_nascimento = models.DateField(blank=True, null=True)
     data_contratacao = models.DateField(blank=True, null=True)
+    tipo = models.CharField(max_length=10, choices=TIPOS, default=PROFESSOR)
 
     def __str__(self):
         return self.nome
@@ -41,4 +52,3 @@ class ReservaAmbiente(models.Model):
 
     def __str__(self):
         return f"Reserva {self.sala_reservada} - {self.periodo} de {self.data_inicio.strftime('%d/%m/%Y')}"
-

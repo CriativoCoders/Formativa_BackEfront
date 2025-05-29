@@ -1,10 +1,13 @@
 == Professsora Fernanda
+nome admin: senai
+senha: mange
+.
 {
     "nome": "Fernanda Silva",
     "email": "fernanda.silva@gmail.com",
     "indentificacao": "12345"
 }
-
+.
 {
     "nome": "Fernanda Silva",
     "email": "fernanda.silva@gmail.com",
@@ -12,4 +15,10 @@
     "telefone": "987654321",
     "data_nascimento": "1990-05-15",
     "data_contratacao": "2022-08-01"
+}
+.
+{
+    "nome": "Lindomar",
+    "email": "Lindomar.silva@gmail.com",
+    "indentificacao": "34521"
 }

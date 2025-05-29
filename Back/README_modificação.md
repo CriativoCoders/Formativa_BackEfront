@@ -1,3 +1,35 @@
+### serializers.py_pasta da aplicação futuras modificações...
+
+```python
+from rest_framework import serializers
+from .models import Professor, Disciplina, ReservaAmbiente
+
+class ProfessorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Professor
+        fields = ['id', 'nome', 'email', 'telefone', 'data_nascimento', 'data_contratacao', 'tipo']
+
+class DisciplinaSerializer(serializers.ModelSerializer):
+    professor_responsavel = ProfessorSerializer()
+
+    class Meta:
+        model = Disciplina
+        fields = ['id', 'nome', 'curso', 'carga_horaria', 'descricao', 'professor_responsavel']
+
+class ReservaAmbienteSerializer(serializers.ModelSerializer):
+    professor_responsavel = ProfessorSerializer()
+    disciplina_associada = DisciplinaSerializer()
+
+    class Meta:
+        model = ReservaAmbiente
+        fields = ['id', 'data_inicio', 'data_termino', 'periodo', 'sala_reservada', 'professor_responsavel', 'disciplina_associada']
+```
+
+#
+
+### views.py
+
+```python
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -122,3 +154,97 @@ class ProfessorReservaView(APIView):
         reservas = ReservaAmbiente.objects.filter(professor_responsavel=request.user)
         serializer = ReservaAmbienteSerializer(reservas, many=True)
         return Response(serializer.data)
+```
+
+#
+
+### urls.py
+```python
+from django.urls import path
+from .views import (
+    ProfessorView, ProfessorListView, ProfessorDetailView, ProfessorUpdateView, ProfessorDeleteView,
+    DisciplinaView, ReservaAmbienteView, ReservaAmbienteListView,
+    ProfessorDisciplinaView, ProfessorReservaView
+)
+
+urlpatterns = [
+    # Professores
+    path('professores/', ProfessorView.as_view(), name='criar_professor'),
+    path('professores/lista/', ProfessorListView.as_view(), name='lista_professores'),
+    path('professores/<int:pk>/', ProfessorDetailView.as_view(), name='detalhe_professor'),
+    path('professores/<int:pk>/atualizar/', ProfessorUpdateView.as_view(), name='atualizar_professor'),
+    path('professores/<int:pk>/excluir/', ProfessorDeleteView.as_view(), name='excluir_professor'),
+
+    # Disciplinas
+    path('disciplinas/', DisciplinaView.as_view(), name='criar_disciplina'),
+
+    # Reservas de Ambiente
+    path('reservas/', ReservaAmbienteView.as_view(), name='criar_reserva'),
+    path('reservas/lista/', ReservaAmbienteListView.as_view(), name='lista_reservas'),
+
+    # Views adicionais para professores
+    path('professor/disciplinas/', ProfessorDisciplinaView.as_view(), name='disciplinas_professor'),
+    path('professor/reservas/', ProfessorReservaView.as_view(), name='reservas_professor'),
+]
+```
+
+#
+
+### models.py
+
+```python
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+
+class Professor(AbstractUser):
+    PROFESSOR = 'PROFESSOR'
+    GESTOR = 'GESTOR'
+    OUTRO = 'OUTRO'
+
+    TIPOS = [
+        (PROFESSOR, 'Professor'),
+        (GESTOR, 'Gestor'),
+        (OUTRO, 'Outro'),
+    ]
+
+    indentificacao = models.CharField(max_length=20, unique=True)
+    nome = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
+    telefone = models.CharField(max_length=15, blank=True, null=True)
+    data_nascimento = models.DateField(blank=True, null=True)
+    data_contratacao = models.DateField(blank=True, null=True)
+    tipo = models.CharField(max_length=10, choices=TIPOS, default=PROFESSOR)
+
+    def __str__(self):
+        return self.nome
+
+class Disciplina(models.Model):
+    nome = models.CharField(max_length=100)
+    curso = models.CharField(max_length=100, blank=True, null=True)
+    carga_horaria = models.PositiveIntegerField(blank=True, null=True)
+    descricao = models.TextField(blank=True, null=True)
+    professor_responsavel = models.ForeignKey(Professor, on_delete=models.SET_NULL, null=True, related_name='disciplinas')
+
+    def __str__(self):
+        return self.nome
+
+class ReservaAmbiente(models.Model):
+    MANHA = 'Manhã'
+    TARDE = 'Tarde'
+    NOITE = 'Noite'
+    PERIODOS = [
+        (MANHA, 'Manhã'),
+        (TARDE, 'Tarde'),
+        (NOITE, 'Noite'),
+    ]
+
+    data_inicio = models.DateTimeField()
+    data_termino = models.DateTimeField()
+    periodo = models.CharField(max_length=6, choices=PERIODOS)
+    sala_reservada = models.CharField(max_length=50)
+    professor_responsavel = models.ForeignKey(Professor, on_delete=models.SET_NULL, null=True, related_name='reservas')
+    disciplina_associada = models.ForeignKey(Disciplina, on_delete=models.SET_NULL, null=True, related_name='reservas')
+
+    def __str__(self):
+        return f"Reserva {self.sala_reservada} - {self.periodo} de {self.data_inicio.strftime('%d/%m/%Y')}"
+```
