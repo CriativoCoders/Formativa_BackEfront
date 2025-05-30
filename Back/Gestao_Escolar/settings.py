@@ -95,10 +95,10 @@ WSGI_APPLICATION = 'Gestao_Escolar.wsgi.application'
 
 DATABASES = {
      'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'novo',
-        'USER': 'usuario',
-        'PASSWORD': 'Segur@Senh4',
+        'USER': 'root',
+        'PASSWORD': 'senai',
         'HOST': 'localhost',
         'PORT': '3306',
     }

@@ -6,12 +6,13 @@ from .models import Professor, Disciplina, ReservaAmbiente
 from .serializers import ProfessorSerializer, DisciplinaSerializer, ReservaAmbienteSerializer
 from rest_framework import permissions
 
+
 class IsGestor(permissions.BasePermission):
     def has_permission(self, request, view):
         return request.user.tipo == Professor.GESTOR
 
-# Views para Professores
-class ProfessorView(APIView):
+# Views para criar novos Professores
+class ProfessorcriarView(APIView):
     permission_classes = [IsAuthenticated, IsGestor]
 
     def post(self, request):
@@ -21,14 +22,18 @@ class ProfessorView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# Lista de professores cadastrados no sistema
 class ProfessorListView(APIView):
-    permission_classes = [IsAuthenticated, IsGestor]
+    permission_classes = [IsAuthenticated, IsGestor] # Garante as permissoes necessarias para acessar as views. O [ IsAuthenticated ] o usuario precisa esta autenticado
+# [ IsGestor ] ou ter o papel de Gestor etc...
 
     def get(self, request):
         professores = Professor.objects.all()
         serializer = ProfessorSerializer(professores, many=True)
         return Response(serializer.data)
+# ---------------------------------------------------------------------
 
+# view para recuperar dados de professor especifico pelo iD
 class ProfessorDetailView(APIView):
     permission_classes = [IsAuthenticated, IsGestor]
 
@@ -39,7 +44,9 @@ class ProfessorDetailView(APIView):
             return Response(serializer.data)
         except Professor.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+#  -----
 
+# Define permissoes para acessar a view nesse caso o usuario precisa ser Gestor ou estar autenticado;
 class ProfessorUpdateView(APIView):
     permission_classes = [IsAuthenticated, IsGestor]
 
@@ -65,6 +72,7 @@ class ProfessorDeleteView(APIView):
         except Professor.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+
 # Views para Disciplinas
 class DisciplinaView(APIView):
     permission_classes = [IsAuthenticated, IsGestor]
@@ -76,16 +84,49 @@ class DisciplinaView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class DisciplinaListView(APIView):
-    permission_classes = [IsAuthenticated]
-
+class DisciplinaListaView(APIView):
+    permission_classes = [IsAuthenticated, IsGestor]
     def get(self, request):
-        if request.user.tipo == Professor.GESTOR:
-            disciplinas = Disciplina.objects.all()
-        else:
-            disciplinas = Disciplina.objects.filter(professor_responsavel=request.user)
+        disciplinas = Disciplina.objects.all()
         serializer = DisciplinaSerializer(disciplinas, many=True)
         return Response(serializer.data)
+
+class DisciplinaDetalhelView(APIView):
+    permission_classes = [IsAuthenticated, IsGestor]
+
+    def get(self, request, pk):
+        try:
+            disciplina = Disciplina.objects.get(pk=pk)
+            serializer = DisciplinaSerializer(disciplina)
+            return Response(serializer.data)
+        except Disciplina.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+class DisciplinaUpdateView(APIView):
+    permission_classes = [IsAuthenticated, IsGestor]
+
+    def put(self, request, pk):
+        try:
+            disciplina = Disciplina.objects.get(pk=pk)
+            serializer = DisciplinaSerializer(disciplina, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Disciplina.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+class DisciplinaDeleteView(APIView):
+    permission_classes = [IsAuthenticated, IsGestor]
+
+    def delete(self, request, pk):
+        try:
+            disciplina = Disciplina.objects.get(pk=pk)
+            disciplina.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Disciplina.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
 
 # Views para Reservas de Ambiente
 class ReservaAmbienteView(APIView):
