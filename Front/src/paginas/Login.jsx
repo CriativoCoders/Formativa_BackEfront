@@ -4,8 +4,6 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
 import estilos from './Login.module.css';
-import { BarraNavegacao } from '../Componentes/BarraNavegacao';
-import { Rodape } from '../Componentes/Rodape';
 
 const schemaLogin = z.object({
   username: z.string()
@@ -13,7 +11,7 @@ const schemaLogin = z.object({
     .max(25, 'Informe até 25 caracteres'),
   password: z.string()
     .min(8, 'Informe no mínimo 8 caracteres')
-    .max(15, 'Informe no máximo 15 caracteres')
+    .max(15, 'Informe no máximo 15 caracteres'),
 })
 
 export function Login(){
@@ -27,31 +25,43 @@ export function Login(){
     resolver: zodResolver(schemaLogin)
   })
 
-  async function obterDados(data) {
-    try {
-      const response = await axios.post('http://127.0.0.1:8000/api/token/', {
-        username: data.username,
-        password: data.password
-      });
-      const { access, refresh, user } = response.data;
+// tratamento de erro 
+async function obterDados(data) {
+  try {
+    const response = await axios.post('http://127.0.0.1:8000/api/token/', {
+      username: data.username,
+      password: data.password
+    });
+    const { access, refresh, user } = response.data;
 
-      localStorage.setItem('access_token', access);
-      localStorage.setItem('refresh_token', refresh);
-      localStorage.setItem('tipo', user.tipo);
-      localStorage.setItem('user_id', user.id);
-      localStorage.setItem('username', user.username);
-      
-      console.log('Login realizado')
-      navigate('/inicial');
-    } catch (erro) {
-      console.error('Erro no login', erro);
-      alert("Credenciais inválidas")
+    localStorage.setItem('access_token', access);
+    localStorage.setItem('refresh_token', refresh);
+    localStorage.setItem('tipo', user.tipo);
+    localStorage.setItem('user_id', user.id);
+    localStorage.setItem('username', user.username);
+    
+    console.log('Login realizado')
+    navigate('/inicial');
+  } catch (erro) {
+    if (erro.response) {
+      // Erro de autenticação
+      if (erro.response.status === 401) {
+        alert("Credenciais inválidas");
+      } else {
+        alert("Erro ao realizar login");
+      }
+    } else if (erro.request) {
+      // Erro de rede
+      alert("Erro de conexão");
+    } else {
+      // Erro desconhecido
+      alert("Erro desconhecido");
     }
   }
+}
   
   return (
     <div className={estilos.BarraNavegacao}>
-      <BarraNavegacao/>
         <div className={estilos.main}>
           <div className={estilos.loginForm}>
             <form onSubmit={handleSubmit(obterDados)}>
@@ -75,8 +85,9 @@ export function Login(){
           </div>
         </div>
         <div className={estilos.Rodape}>
-          {/* <Rodape/> */}
         </div>
     </div>
   )
 }
+
+// Criar endpoint para conectar com back end 

@@ -2,11 +2,15 @@ from django.urls import path
 from .views import (
     ProfessorcriarView, ProfessorListView, ProfessorDetailView, ProfessorUpdateView, ProfessorDeleteView,
     DisciplinaView, ReservaAmbienteView, ReservaAmbienteListView,
-    ProfessorDisciplinaView, ProfessorReservaView, DisciplinaListaView, DisciplinaDetalhelView, DisciplinaUpdateView, DisciplinaDeleteView,
+    ProfessorDisciplinaView, ProfessorReservaView, DisciplinaListaView, DisciplinaDetalhelView, DisciplinaUpdateView, DisciplinaDeleteView,CreateUserView,CustomAuthToken
     
 )
 
 urlpatterns = [
+    #Login
+    path('token/', CustomAuthToken.as_view()),
+    path('usuarios/criar/', CreateUserView.as_view()),
+
     # Professores
     path('professores/criar/', ProfessorcriarView.as_view(), name='criar_professor'),
     path('professores/lista/', ProfessorListView.as_view(), name='lista_professores'),

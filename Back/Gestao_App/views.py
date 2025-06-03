@@ -1,11 +1,32 @@
+# views.py
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from .models import Professor, Disciplina, ReservaAmbiente
 from .serializers import ProfessorSerializer, DisciplinaSerializer, ReservaAmbienteSerializer
 from rest_framework import permissions
+from rest_framework.authtoken.views import ObtainAuthToken
 
+class CreateUserView(APIView):
+    def post(self, request):
+        username = request.data['username']
+        password = request.data['password']
+        professor = Professor.objects.create_user(username=username, password=password)
+        return Response({'message': 'Usuário criado com sucesso'})
+
+class CustomAuthToken(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data,
+                                           context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user_id': user.pk,
+        })
 
 class IsGestor(permissions.BasePermission):
     def has_permission(self, request, view):

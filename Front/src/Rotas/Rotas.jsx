@@ -7,8 +7,8 @@ import { Inicial } from '../paginas/Inicial';
 export function Rotas(){
     return(
         <Routes>
-            <Route path='/' element={<Inicial/>}/>
-            <Route path='/Login' element={<Login/>}/>
+            <Route path='/' element={<Login/>}/>
+            <Route path='/Inicial' element={<Inicial/>}/>
              <Route path='/Professores' element={<Professores/>}/>
             
         </Routes>
