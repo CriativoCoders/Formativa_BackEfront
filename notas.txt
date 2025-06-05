@@ -1,0 +1,96 @@
+### Índice
+
+    Autenticação
+    Professores
+    Disciplinas
+    Reserva de Ambiente
+    Salas
+    Disciplinas do Professor
+
+Autenticação
+Obter Token
+
+    URL: token/
+    Método: POST
+    Corpo: {"username": "seu_username", "password": "sua_senha"}
+    Resposta: {"token": "seu_token"}
+
+Professores
+Listar e Criar Professores
+
+    URL: professores/
+    Método: GET (listar) ou POST (criar)
+    Corpo: {"nome": "Nome do Professor", "NI": "Número de Identificação"} (somente para criar)
+    Resposta: {"id": 1, "nome": "Nome do Professor", "NI": "Número de Identificação"}
+
+Atualizar, Deletar e Visualizar Professor
+
+    URL: professores/<int:NI>/
+    Método: PUT (atualizar), DELETE (deletar) ou GET (visualizar)
+    Corpo: {"nome": "Nome do Professor", "NI": "Número de Identificação"} (somente para atualizar)
+    Resposta: {"id": 1, "nome": "Nome do Professor", "NI": "Número de Identificação"}
+
+Disciplinas
+Listar e Criar Disciplinas
+
+    URL: disciplina/
+    Método: GET (listar) ou POST (criar)
+    Corpo: {"nome": "Nome da Disciplina"} (somente para criar)
+    Resposta: {"id": 1, "nome": "Nome da Disciplina"}
+
+Atualizar, Deletar e Visualizar Disciplina
+
+    URL: disciplina/<int:pk>/
+    Método: PUT (atualizar), DELETE (deletar) ou GET (visualizar)
+    Corpo: {"nome": "Nome da Disciplina"} (somente para atualizar)
+    Resposta: {"id": 1, "nome": "Nome da Disciplina"}
+
+Reserva de Ambiente
+Listar e Criar Reservas de Ambiente
+
+    URL: reservaAmbiente/
+    Método: GET (listar) ou POST (criar)
+    Corpo: {"data_inicio": "Data de Início", "data_termino": "Data de Término"} (somente para criar)
+    Resposta: {"id": 1, "data_inicio": "Data de Início", "data_termino": "Data de Término"}
+
+Atualizar, Deletar e Visualizar Reserva de Ambiente
+
+    URL: reservaAmbiente/<int:pk>/
+    Método: PUT (atualizar), DELETE (deletar) ou GET (visualizar)
+    Corpo: {"data_inicio": "Data de Início", "data_termino": "Data de Término"} (somente para atualizar)
+    Resposta: {"id": 1, "data_inicio": "Data de Início", "data_termino": "Data de Término"}
+
+Salas
+Listar e Criar Salas
+
+    URL: sala/
+    Método: GET (listar) ou POST (criar)
+    Corpo: {"numero": "Número da Sala"} (somente para criar)
+    Resposta: {"id": 1, "numero": "Número da Sala"}
+
+Atualizar, Deletar e Visualizar Sala
+
+    URL: sala/<int:pk>/
+    Método: PUT (atualizar), DELETE (deletar) ou GET (visualizar)
+    Corpo: {"numero": "Número da Sala"} (somente para atualizar)
+    Resposta: {"id": 1, "numero": "Número da Sala"}
+
+Disciplinas do Professor
+Ver Disciplinas do Professor
+
+    URL: professorDisciplinas/
+    Método: GET
+    Resposta: {"id": 1, "nome": "Nome da Disciplina"}
+
+
+
+
+
+
+
+
+
+    {
+    "username": "nome_do_professor",
+    "password": "senha_do_professor"
+}
