@@ -1,93 +1,80 @@
 import axios from 'axios';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
 import estilos from './Login.module.css';
-
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from '@hookform/resolvers/zod';
+ 
 const schemaLogin = z.object({
-  username: z.string()
-    .min(1, 'Informe seu usuário')
-    .max(25, 'Informe até 25 caracteres'),
-  password: z.string()
-    .min(8, 'Informe no mínimo 8 caracteres')
-    .max(15, 'Informe no máximo 15 caracteres'),
-})
-
-export function Login(){
-  const navigate = useNavigate();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm({
-    resolver: zodResolver(schemaLogin)
-  })
-
-// tratamento de erro 
-async function obterDados(data) {
-  try {
-    const response = await axios.post('http://127.0.0.1:8000/api/token/', {
-      username: data.username,
-      password: data.password
+    username: z.string()
+        .min(1, 'Informe um nome')
+        .max(25, 'Informe no máximo 25 caracteres'),
+    password: z.string()
+        .min(1, 'Informe uma senha')
+        .max(50,'Informe no máximo 15 caracteres')
+});
+ 
+export function Login() {
+    const navigate = useNavigate();
+ 
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm({
+        resolver: zodResolver(schemaLogin)
     });
-    const { access, refresh, user } = response.data;
-
-    localStorage.setItem('access_token', access);
-    localStorage.setItem('refresh_token', refresh);
-    localStorage.setItem('tipo', user.tipo);
-    localStorage.setItem('user_id', user.id);
-    localStorage.setItem('username', user.username);
-    
-    console.log('Login realizado')
-    navigate('/inicial');
-  } catch (erro) {
-    if (erro.response) {
-      // Erro de autenticação
-      if (erro.response.status === 401) {
-        alert("Credenciais inválidas");
-      } else {
-        alert("Erro ao realizar login");
-      }
-    } else if (erro.request) {
-      // Erro de rede
-      alert("Erro de conexão");
-    } else {
-      // Erro desconhecido
-      alert("Erro desconhecido");
+ 
+    async function obterDadosFormulario(data) {
+        console.log(`Dados: ${data}`)
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/login/', {
+                username: data.username,
+                password: data.password
+            });
+ 
+            const { access, refresh, user } = response.data;
+ 
+            localStorage.setItem('access_token', access);
+            localStorage.setItem('refresh_token', refresh);
+            // localStorage.setItem('tipo', user.tipo);
+            // localStorage.setItem('user_id', user.id);
+            // localStorage.setItem('username', user.username);
+ 
+            console.log('Login bem-sucedido! Bem Vindo!😊');          
+            navigate('/inicial');
+         
+ 
+        } catch (error) {
+            console.error('Erro de autenticação', error);
+            alert("Dados Inválidos, por favor verifique suas credenciais");
+        }
     }
-  }
-}
-  
-  return (
-    <div className={estilos.BarraNavegacao}>
-        <div className={estilos.main}>
-          <div className={estilos.loginForm}>
-            <form onSubmit={handleSubmit(obterDados)}>
-              <h2 className={estilos.titulo}>Login</h2>
-              <label>Nome</label>
-              <input
-                {...register('username')}
-                placeholder='username'
+ 
+    return (
+        <div className={estilos.conteiner}>
+            <form onSubmit={handleSubmit(obterDadosFormulario)} className={estilos.loginForm}>
+                <h2 className={estilos.titulo}>Login</h2>
+ 
+                <label className={estilos.label}>Usuário:</label>
+                <input
+                    {...register('username')}
+                    placeholder='username'
+                    className={estilos.inputField}
                 />
-              {errors.username && <p>{errors.username.message}</p>}
-
-              <label>Senha</label>
-              <input 
-                {...register('password')}
-                placeholder='senha'
-                type='password'
+                {errors.username && <p className={estilos.error}>{errors.username.message}</p>}
+ 
+                <label>Senha: </label>
+                <input
+                    {...register('password')}
+                    placeholder='Senha'
+                    type="password"
+                    className={estilos.inputField}
                 />
-              {errors.password && <p>{errors.password.message}</p>}
-              <button type='submit'>Entrar</button>
+                {errors.password && <p className={estilos.error}>{errors.password.message}</p>}
+ 
+                <button type="submit" className={estilos.submitButton}>Entrar</button>
             </form>
-          </div>
         </div>
-        <div className={estilos.Rodape}>
-        </div>
-    </div>
-  )
+    );
 }
-
-// Criar endpoint para conectar com back end 

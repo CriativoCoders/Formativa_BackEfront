@@ -43,6 +43,7 @@ input{
     border:  1px solid rgb(175, 6, 43);
     box-sizing: border-box;
     margin: 5px;
+    width: 300px;
 }
 
 

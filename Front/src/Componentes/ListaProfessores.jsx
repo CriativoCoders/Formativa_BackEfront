@@ -1,6 +1,7 @@
 import estilo from './ListaProfessores.module.css';
 import { useState } from 'react';
 
+
 export function ListaProfessores() {
   const [professores, setProfessores] = useState([]);
   const [idAtual, setIdAtual] = useState(1);
@@ -9,7 +10,8 @@ export function ListaProfessores() {
     nome: '',
     disciplina: '',
   });
-
+  
+  
   const adicionarProfessor = (e) => {
     e.preventDefault();
     const professor = {
@@ -25,12 +27,14 @@ export function ListaProfessores() {
     setIdAtual(idAtual + 1);
   };
 
+
   const handleInputChange = (e) => {
     setNovoProfessor({
       ...novoProfessor,
       [e.target.name]: e.target.value,
     });
   };
+
 
   const deletarProfessor = (id) => {
     setProfessores(professores.filter((professor) => professor.id !== id));

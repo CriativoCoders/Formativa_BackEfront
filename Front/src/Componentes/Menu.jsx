@@ -18,7 +18,7 @@ export function Menu() {
                             </Link>
                         </td>
                         <td className={estilo.item}>
-                            <Link to='/gestor'>
+                            <Link to='/Gestores'>
                             <img src={gestores} alt="Img gestor"></img>                                
                             <p>Gestores</p>
                             </Link>
