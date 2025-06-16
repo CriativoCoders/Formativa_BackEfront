@@ -1,7 +1,7 @@
 import estilo from './BarraNavegacao.module.css';
 import { Link } from 'react-router-dom';
 
-export function BarraNavegacao(){
+export const BarraNavegacao = () => {
     return(
         <nav className={estilo.conteiner}>
             <ul>

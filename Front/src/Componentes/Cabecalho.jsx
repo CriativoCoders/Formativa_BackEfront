@@ -6,3 +6,11 @@ export function Cabecalho(){
         </header>
     )
 }
+
+export const Cabecalho2 = () =>{
+    return(
+        <header className={estilo.conteiner}>
+            <h1>Seja Bem vindo!</h1>
+        </header>
+    );
+}

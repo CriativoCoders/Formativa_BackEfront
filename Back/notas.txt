@@ -1,0 +1,8 @@
+createsuperuser
+admin
+senai
+
+___________________
+
+Fernanda
+Fernanda@senai

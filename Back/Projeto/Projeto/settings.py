@@ -117,13 +117,25 @@ WSGI_APPLICATION = 'Projeto.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'novo',
+        'NAME': 'gestao_educacional',
         'USER': 'root',
-        'PASSWORD': 'senai',
+        'PASSWORD': 'Segur@Senh4',
         'HOST': 'localhost',
         'PORT': '3306',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'novo',
+#         'USER': 'root',
+#         'PASSWORD': 'senai',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
+
 
 
 # Password validation

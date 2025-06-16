@@ -8,12 +8,12 @@ class ProfessorGestorSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def validate(self, data):
-        # Validação de data de nascimento e contratação
+        # Validacao de nascimento etc......
         if data.get('Data_de_Nascimento') and data.get('Data_de_contratacao'):
             if data['Data_de_Nascimento'] > data['Data_de_contratacao']:
                 raise serializers.ValidationError({"Data_de_Nascimento": "A data de nascimento não pode ser mais recente que a data de contratação."})
 
-        # Validação de idade mínima (18 anos)
+        # Validação_idade ate 18 anos.
         if data.get('Data_de_Nascimento'):
             hoje = date.today()
             idade = hoje.year - data['Data_de_Nascimento'].year - ((hoje.month, hoje.day) < (data['Data_de_Nascimento'].month, data['Data_de_Nascimento'].day))

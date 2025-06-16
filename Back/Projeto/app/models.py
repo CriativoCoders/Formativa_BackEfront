@@ -32,7 +32,7 @@ class ProfessorGestor(AbstractUser):
     
     # Método que retorna uma string que representa o objeto
     def __str__(self):
-        # Aqui eu mudei para usar o Numero_indentificacao em vez de NI
+        #Numero_indentificacao 
         return f"{self.Nome} - Numero_identificacao: {self.Numero_indentificacao}"
 
 

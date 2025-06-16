@@ -1,8 +1,9 @@
+
 .container {
-  position: fixed;
+  /* position: fixed; */
   bottom: 0;
   width: 100%;
-  background-color: #fff; /* ajuste a cor do fundo conforme necessário */
+  background-color: #b8b8b8; /* ajuste a cor do fundo conforme necessário */
   text-align: center; /* ajuste o alinhamento do texto conforme necessário */
   padding: 10px; /* ajuste o espaçamento interno conforme necessário */
   box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1); /* ajuste a sombra conforme necessário */
@@ -10,4 +11,12 @@
 
 ul{
     justify-content: center;
+    display: flex;
+    padding-left: 10px;
+}
+
+li{
+  padding-left: 100px;
+  list-style: none;
+  font-family: Arial, Helvetica, sans-serif;
 }

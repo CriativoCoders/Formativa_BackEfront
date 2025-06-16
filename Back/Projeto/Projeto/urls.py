@@ -20,11 +20,17 @@ from django.urls import path, include
 from app import views
 urlpatterns = [
     #admin
-    path('admin', admin.site.urls),
+    path('admin/', admin.site.urls),
+    # admin
+    # senai
 
     # ProfessorGestor
     path('professores/', views.ProfessorGestorListCreateView.as_view()),
     path('professores/<int:Numero_indentificacao>/', views.ProfessorGestorRetriveUpdateDestroyAPIView.as_view()),
+ 
+# Fernanda
+# Fernanda@senai
+
 
     # Disciplina
     path('disciplinas/', views.DisciplinaListCreateView.as_view()),
